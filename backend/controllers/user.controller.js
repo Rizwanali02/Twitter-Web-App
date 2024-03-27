@@ -21,11 +21,15 @@ const register = async (req, res) => {
         }
         const hashedPassword = await bcryptjs.hash(password, 10);
 
+        const userProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
+
+
         let newUser = await User.create({
             name,
             username,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            profilePic: userProfilePic
         });
         return res.status(201).json({
             success: true,
@@ -114,7 +118,8 @@ const bookmark = async (req, res) => {
 
 const getMyProfile = async (req, res) => {
     try {
-        const user = req.user;
+        const { id } = req.params;
+        const user = await User.findById(id).select("-password");
         return res.status(200).json({
             success: true,
             message: "User Profile",
@@ -131,7 +136,7 @@ const getMyProfile = async (req, res) => {
 
 const getOtherUsers = async (req, res) => {
     try {
-        const id = req.user._id;
+        const {id} = req.user;
         const allUsers = await User.find({ _id: { $ne: id } }).select("-password");
         if (allUsers.length === 0) {
             return res.status(404).json({
@@ -155,7 +160,7 @@ const followAndUnFollow = async (req, res) => {
         const loggedInUserId = req.user._id; // user follow/unfollow krne wala
         const userId = req.params.id; // user jise followed/unfollowed krna hai
 
-        
+
         const loggedInUser = await User.findById(loggedInUserId);
         const user = await User.findById(userId);
 

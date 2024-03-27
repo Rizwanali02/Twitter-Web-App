@@ -7,7 +7,7 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", isAuthenticated, logout);
 router.put("/bookmark/:id", isAuthenticated, bookmark);
-router.get("/profile", isAuthenticated, getMyProfile);
+router.get("/profile/:id", isAuthenticated, getMyProfile);
 router.get("/all/users", isAuthenticated, getOtherUsers);
 router.put("/followandunfollow/:id", isAuthenticated, followAndUnFollow);
 

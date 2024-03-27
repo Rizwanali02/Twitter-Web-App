@@ -96,7 +96,7 @@ const getMyTweets = async (req, res) => {
 const getAllTweets = async (req, res) => {
     try {
         // logged-in user's ID
-        const loggedInUserId = req.user._id;
+        const {loggedInUserId} = req.params;
 
         // OtherUsers 
         const otherUsersId = await User.find({ _id: { $ne: loggedInUserId } });

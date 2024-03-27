@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema({
     bookmarks:{
         type: Array,
         default: []
+    },
+    profilePic: {
+        type: String,
+        default: '',
     }
 
 }, { timeseries: true });

@@ -4,10 +4,16 @@ import dbConnection from './database/db.database.js';
 import cookieParser from 'cookie-parser';
 import userRoute from "./routes/user.routes.js"
 import userTweet from "./routes/tweet.routes.js"
+import cors from 'cors';
 
 dotenv.config();
 dbConnection()
 const app = express();
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: ["GET", "PUT", "DELETE", "POST"],
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
