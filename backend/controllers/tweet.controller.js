@@ -6,7 +6,9 @@ const createTweet = async (req, res) => {
         const { description } = req.body;
         const id = req.user._id;
 
-        if (!description || !id) {
+        console.log(description);
+
+        if (!description) {
             return res.status(401).json({
                 success: false,
                 message: "Fill all fields"
@@ -62,14 +64,14 @@ const likeOrDislike = async (req, res) => {
             await Tweet.findByIdAndUpdate(tweetId, { $pull: { like: loggedInUserId } });
             return res.status(200).json({
                 success: true,
-                message: "User disliked your tweet."
+                message: "Disliked tweet."
             })
         } else {
             // like
             await Tweet.findByIdAndUpdate(tweetId, { $push: { like: loggedInUserId } });
             return res.status(200).json({
                 success: true,
-                message: "User liked your tweet."
+                message: "Liked tweet."
             })
         }
     } catch (error) {
@@ -96,7 +98,7 @@ const getMyTweets = async (req, res) => {
 const getAllTweets = async (req, res) => {
     try {
         // logged-in user's ID
-        const {loggedInUserId} = req.params;
+        const { loggedInUserId } = req.params;
 
         // OtherUsers 
         const otherUsersId = await User.find({ _id: { $ne: loggedInUserId } });

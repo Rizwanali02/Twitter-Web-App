@@ -4,8 +4,8 @@ import { User } from "../models/user.model.js";
 const isAuthenticated = async (req, res, next) => {
     try {
         // get token from cookies
-        const {token} = req.cookies;
-
+        const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+        // console.log("token",token);
         // Check if token exists
         if (!token) {
             return res.status(401).json({
@@ -30,7 +30,7 @@ const isAuthenticated = async (req, res, next) => {
 
         // Attach user to request object
         req.user = user;
-        
+
         next();
     } catch (error) {
         console.error(`Token verification failed: ${error}`);
