@@ -5,8 +5,9 @@ import useGetAllTweet from "../../hooks/tweetHook/useGetAllTweet";
 import { useSelector } from "react-redux";
 import useLikeOrDislike from "../../hooks/tweetHook/useLikeOrDislike";
 
-const Tweet = ({ activeSection }) => {
+const Tweet = () => {
   const { user } = useSelector((store) => store.user);
+  const { tweets } = useSelector((store) => store.tweets);
   const id = user?._id;
   
   if (id) useGetAllTweet({ id });
@@ -16,13 +17,12 @@ const Tweet = ({ activeSection }) => {
     await likeDisLike({ id });
   };
 
-  const { tweets } = useSelector((store) => store.tweets);
   return (
     <div>
       {tweets?.map((tweet) => {
         return (
           <div
-            key={tweet._id}
+            key={tweet?._id}
             className="max-w-full p-4 md:border-b h-52 sm:h-52"
           >
             <div className="flex items-center">

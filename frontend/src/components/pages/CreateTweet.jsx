@@ -1,42 +1,50 @@
 import { useState } from "react";
 import Avatar from "react-avatar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import usePostTweet from "../../hooks/tweetHook/usePostTweet";
+import { getIsActiveTab } from "../../redux/tweetSlice";
 
-const CreateTweet = ({ activeSection, toggleSection }) => {
+const CreateTweet = ({}) => {
   const { user } = useSelector((store) => store.user);
+  const { isActiveTab } = useSelector((store) => store.tweets);
   const [description, setDescription] = useState("");
   const { postTweet, loading } = usePostTweet();
-
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(description);
     postTweet({ description });
     setDescription("");
   };
+  const forYouTab = () => {
+    dispatch(getIsActiveTab(true));
+  };
+  const followingYouTab = () => { 
+    dispatch(getIsActiveTab(false));
+  };
 
   return (
     <div className="w-full">
       <div className="flex justify-evenly border-b border-gray-200">
         <div
-          onClick={() => toggleSection("forYou")}
+          onClick={forYouTab}
           className={`cursor-pointer hover:bg-gray-200 w-full text-center px-4 py-3 ${
-            activeSection === "forYou" ? "bg-gray-200" : ""
+            isActiveTab === true ? "bg-gray-200" : ""
           }`}
         >
           <h1 className="font-semibold text-gray-600 text-lg">For you</h1>
         </div>
         <div
-          onClick={() => toggleSection("following")}
+          onClick={followingYouTab}
           className={`cursor-pointer hover:bg-gray-200 w-full text-center px-4 py-3 ${
-            activeSection === "following" ? "bg-gray-200" : ""
+            !isActiveTab ? "bg-gray-200" : ""
           }`}
         >
           <h1 className="font-semibold text-gray-600 text-lg">Following</h1>
         </div>
       </div>
 
-      {activeSection === "following" && (
+      {isActiveTab === true && (
         <form onSubmit={handleSubmit}>
           <div className="hidden md:block">
             <div className="flex items-center p-4">

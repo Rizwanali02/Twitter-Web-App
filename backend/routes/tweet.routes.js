@@ -8,7 +8,7 @@ router.delete("/delete/:id", isAuthenticated, deleteTweet);
 router.put("/like/:id", isAuthenticated, likeOrDislike);
 router.get("/tweets", isAuthenticated, getMyTweets);
 router.get("/allusertweets/:id", isAuthenticated, getAllTweets);
-router.get("/followingUsertweets", isAuthenticated, getFollowingAllTweets);
+router.get("/followingUsertweets/:id", getFollowingAllTweets);
 
 
 

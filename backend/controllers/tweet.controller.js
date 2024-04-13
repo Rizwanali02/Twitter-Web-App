@@ -121,27 +121,31 @@ const getAllTweets = async (req, res) => {
 
 
 
-
 const getFollowingAllTweets = async (req, res) => {
-    // user jise follow krta hai unke tweets--------------------------------
     try {
-        const id = req.user._id;
+        const { id } = req.params;
         const loggedInUser = await User.findById(id);
         const loggedInUserTweets = await Tweet.find({ userId: id });
-        const followingUserTweet = await Promise.all(loggedInUser.following.map((otherUserId) => {
+        const followingUserTweets = await Promise.all(loggedInUser.following?.map((otherUserId) => {
             return Tweet.find({ userId: otherUserId });
         }));
+
+        const allTweets = [...loggedInUserTweets, ...followingUserTweets.flat()]; // Flatten the array of arrays
+
         return res.status(200).json({
             success: true,
             message: "All Tweets",
-            tweets: [...loggedInUserTweets, ...followingUserTweet]
+            tweets: allTweets
         });
-
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
     }
-
 };
+
 
 
 

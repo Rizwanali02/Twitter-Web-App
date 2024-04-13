@@ -5,6 +5,7 @@ const tweetSlice = createSlice({
     initialState: {
         tweets: null,
         refresh: false,
+        isActiveTab: true,
     },
     reducers: {
         getMyTweets: (state, action) => {
@@ -12,9 +13,12 @@ const tweetSlice = createSlice({
         },
         getRefresh: (state) => {
             state.refresh = !state.refresh;
+        },
+        getIsActiveTab: (state, action) => {
+            state.isActiveTab = action.payload;
         }
     }
 });
 
-export const { getMyTweets, getRefresh } = tweetSlice.actions;
+export const { getMyTweets, getRefresh, getIsActiveTab } = tweetSlice.actions;
 export default tweetSlice.reducer;

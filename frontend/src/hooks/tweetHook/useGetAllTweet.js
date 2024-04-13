@@ -6,27 +6,46 @@ import { getMyTweets } from '../../redux/tweetSlice';
 
 const useGetAllTweet = ({ id }) => {
     const dispatch = useDispatch();
-    const { refresh } = useSelector(store => store.tweets)
+    const { refresh, isActiveTab } = useSelector(store => store.tweets)
+
+    const fetchAllTweets = async () => {
+
+        try {
+            const res = await axios.get(`${TWEET_API_END_POINT}/allusertweets/${id}`, {
+                withCredentials: true,
+            });
+            console.log("tweets", res.data.tweets);
+            dispatch(getMyTweets(res.data.tweets));
+
+        } catch (error) {
+            console.error(error);
+
+
+        };
+
+
+    }
+
+    const fetchFollowingTweets = async () => {
+
+        try {
+            const res = await axios.get(`${TWEET_API_END_POINT}/followingUsertweets/${id}`, {
+                withCredentials: true,
+            });
+            console.log("following user tweets", res.data.tweets);
+            dispatch(getMyTweets(res.data.tweets));
+        } catch (error) {
+            console.error(error);
+        };
+    }
     useEffect(() => {
-        const fetchAllTweets = async () => {
-
-            try {
-                const res = await axios.get(`${TWEET_API_END_POINT}/allusertweets/${id}`, {
-                    withCredentials: true,
-                });
-                console.log("tweets", res.data.tweets);
-                dispatch(getMyTweets(res.data.tweets));
-
-            } catch (error) {
-                console.error(error);
-
-
-            };
-
-
+        if (isActiveTab) {
+            fetchAllTweets();
+        } else {
+            fetchFollowingTweets();
         }
-        fetchAllTweets();
-    }, [refresh]);
+
+    }, [refresh, isActiveTab]);
 }
 
 export default useGetAllTweet
