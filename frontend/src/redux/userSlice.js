@@ -6,7 +6,8 @@ const userSlice = createSlice({
         user: null,
         otherUsers: null,
         profile: null,
-        token: null
+        token: null,
+
     },
     reducers: {
         getUser: (state, action) => {
@@ -20,7 +21,9 @@ const userSlice = createSlice({
         },
         getToken: (state, action) => {
             state.token = action.payload;
-        }
+        },
+
+
     }
 });
 

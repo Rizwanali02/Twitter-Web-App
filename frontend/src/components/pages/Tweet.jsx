@@ -1,6 +1,7 @@
 import React from "react";
 import Avatar from "react-avatar";
 import { CiHeart, CiBookmark } from "react-icons/ci";
+import { FcLike } from "react-icons/fc";
 import useGetAllTweet from "../../hooks/tweetHook/useGetAllTweet";
 import { useSelector } from "react-redux";
 import useLikeOrDislike from "../../hooks/tweetHook/useLikeOrDislike";
@@ -9,8 +10,11 @@ const Tweet = () => {
   const { user } = useSelector((store) => store.user);
   const { tweets } = useSelector((store) => store.tweets);
   const id = user?._id;
-  
-  if (id) useGetAllTweet({ id });
+
+  if (id) {
+    useGetAllTweet({ id });
+  }
+
   const { likeDisLike } = useLikeOrDislike();
 
   const likeAndDislike = async (id) => {
@@ -20,9 +24,11 @@ const Tweet = () => {
   return (
     <div>
       {tweets?.map((tweet) => {
+        //find if user is already liked tweet and change like btn background!
+        const isLiked = tweet.like.includes(id);
         return (
           <div
-            key={tweet?._id}
+            key={tweet._id}
             className="max-w-full p-4 md:border-b h-52 sm:h-52"
           >
             <div className="flex items-center">
@@ -38,21 +44,17 @@ const Tweet = () => {
                 </p>
               </div>
             </div>
-
             <p className="mt-4">{tweet.description}</p>
-
             <div className="flex justify-evenly mt-4">
               <div className="flex items-center">
                 <button
-                  onClick={() => likeAndDislike(tweet?._id)}
-                  className={`${
-                    tweet.like?.includes(user._id) ? "bg-red-400" : ""
-                  }text-blue-500 flex gap-1 items-center hover:text-blue-700 `}
+                  onClick={() => likeAndDislike(tweet._id)}
+                  className={` text-blue-500 flex gap-1 items-center hover:text-blue-700`}
                 >
                   <CiHeart
                     size={"30px"}
                     color="gray"
-                    className=" hover:bg-pink-200 rounded-full cursor-pointer"
+                    className={`hover:bg-pink-200 rounded-full cursor-pointer ${isLiked && " bg-[#e9cfcf]"}`}
                   />
                 </button>
                 <span>{tweet.like.length}</span>

@@ -2,7 +2,7 @@ import React from "react";
 import Avatar from "react-avatar";
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
-import useGetOtherUsers from "../../hooks/useGetOtherUsers";
+import useGetOtherUsers from "../../hooks/userHook/useGetOtherUsers";
 import { useSelector } from "react-redux";
 
 const RightSideBar = () => {

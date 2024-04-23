@@ -2,9 +2,9 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { USER_API_END_POINT } from '../utils/constant';
+import { USER_API_END_POINT } from '../../utils/constant';
 import { useDispatch } from 'react-redux';
-import { getToken, getUser } from "../redux/userSlice"
+import { getToken, getUser } from "../../redux/userSlice"
 
 const useLogin = () => {
     const navigate = useNavigate();
