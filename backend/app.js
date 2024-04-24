@@ -10,7 +10,7 @@ dotenv.config();
 dbConnection()
 const app = express();
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173','https://twitter-web-app-backend-server.onrender.com'],
     methods: ["GET", "PUT", "DELETE", "POST"],
     credentials: true
 }));
