@@ -3,16 +3,13 @@ import { Link, useParams } from "react-router-dom";
 import { IoMdArrowBack } from "react-icons/io";
 import Avatar from "react-avatar";
 import useProfile from "../../hooks/userHook/useProfile";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useFollowAndUnfollow } from "../../hooks/userHook/useFollowAndUnfollow";
 
 const Profile = () => {
-  const { profile, user, otherUsers, token } = useSelector(
-    (store) => store.user
-  );
-  const dispatch = useDispatch();
+  const { profile, user } = useSelector((store) => store.user);
   const { id } = useParams();
-  const { fetchProfile } = useProfile();
+  const { fetchProfile, loadingProfile } = useProfile();
 
   useEffect(() => {
     fetchProfile({ id });

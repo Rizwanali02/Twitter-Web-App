@@ -8,7 +8,7 @@ const useRegister = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const signUp = async ({ name, username, email, password }) => {
-        setLoading(true)
+        setLoading(true);
         try {
             const res = await axios.post(`${USER_API_END_POINT}/register`, { name, username, email, password },
                 {
@@ -17,8 +17,6 @@ const useRegister = () => {
                     },
                     withCredentials: true
                 });
-            console.log(res);
-
             if (res.data.success) {
                 navigate("/login");
                 toast.success(res.data.message);
