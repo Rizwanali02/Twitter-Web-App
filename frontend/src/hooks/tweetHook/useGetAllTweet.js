@@ -7,16 +7,18 @@ import { getMyTweets } from '../../redux/tweetSlice';
 const useGetAllTweet = ({ id }) => {
     const dispatch = useDispatch();
     const { refresh, isActiveTab } = useSelector(store => store.tweets)
+    const { token } = useSelector(store => store.user)
 
     const fetchAllTweets = async () => {
 
         try {
             const res = await axios.get(`${TWEET_API_END_POINT}/allusertweets/${id}`, {
                 withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
-            console.log("tweets", res.data.tweets);
             dispatch(getMyTweets(res.data.tweets));
-
         } catch (error) {
             console.error(error);
 

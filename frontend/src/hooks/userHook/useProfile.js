@@ -7,17 +7,17 @@ import { USER_API_END_POINT } from '../../utils/constant';
 const useProfile = () => {
     const dispatch = useDispatch();
     const [loadingProfile, setLoading] = useState(false);
-
+    const { token } = useSelector(store => store.user)
     const fetchProfile = async ({ id }) => {
         setLoading(true);
         try {
             const res = await axios.get(`${USER_API_END_POINT}/profile/${id}`, {
                 withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
-            console.log(res);
             dispatch(getMyProfile(res.data.user));
-
-
         } catch (error) {
             console.error(error);
 
