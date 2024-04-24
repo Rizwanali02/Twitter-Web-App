@@ -8,7 +8,7 @@ import { getRefresh } from '../../redux/tweetSlice';
 const usePostTweet = () => {
 
     const [loading, setLoading] = useState(false)
-    const { user } = useSelector(store => store.user)
+    const { token } = useSelector(store => store.user)
     const dispatch = useDispatch();
 
     const postTweet = async ({ description }) => {
@@ -16,7 +16,8 @@ const usePostTweet = () => {
         try {
             const res = await axios.post(`${TWEET_API_END_POINT}/create`, { description }, {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
                 },
                 withCredentials: true
             })

@@ -1,11 +1,11 @@
 import toast from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getRefresh } from '../../redux/tweetSlice';
 import axios from 'axios';
 import { TWEET_API_END_POINT } from '../../utils/constant';
 
 const useLikeOrDislike = () => {
-   
+    const { token } = useSelector(store => store.user)
     const dispatch = useDispatch();
     const likeDisLike = async ({ id }) => {
 
@@ -13,7 +13,8 @@ const useLikeOrDislike = () => {
             const res = await axios.put(`${TWEET_API_END_POINT}/like/${id}`, {}, {
                 withCredentials: true,
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
                 }
             });
             dispatch(getRefresh());
