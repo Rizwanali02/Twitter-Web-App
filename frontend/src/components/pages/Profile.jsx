@@ -74,7 +74,7 @@ const Profile = () => {
             </button>
           )}
         </div>
-        <div className="sm:mt-16 ml-4">
+        <div className="sm:mt-16 ml-4 mt-10">
           <h1 className="font-bold text-xl">{profile?.name}</h1>
           <p className="mt-2">@{profile?.username}</p>
           <div className="flex gap-2">
@@ -94,15 +94,7 @@ const Profile = () => {
             on this coding journey! Lorem ipsum dolor sit amet consectetur
             adipisicing elit. Eveniet nobis omnis, veniam quis ex, voluptatum
             officia nesciunt amet voluptatibus odit reiciendis recusandae dolor,
-            assumenda quasi earum architecto. Porro asperiores nisi animi ipsa
-            ipsam enim voluptatum mollitia? Ex soluta id, excepturi quo placeat
-            repellendus doloribus quod reprehenderit tempore sit minus dolore
-            ipsam fuga vitae ducimus ullam necessitatibus rerum odit error, ea
-            illum enim. Nulla soluta voluptatem minus doloremque magnam numquam
-            totam quo fugit cupiditate porro dolorum voluptatum, reprehenderit
-            autem nobis hic inventore accusantium sunt nisi ipsam quaerat? Ab
-            quas dolores corporis quod, culpa voluptatum iure esse
-            exercitationem, est magni asperiores? Reiciendis?
+           
           </p>
         </div>
       </div>

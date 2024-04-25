@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 const BottomBar = () => {
   return (
     <>
-      {/* bottom bar */}
       <div className="sm:hidden fixed bottom-0 w-full bg-[#f5f2f2] flex justify-between">
         <div>
           <Link

@@ -8,7 +8,6 @@ const Login = () => {
   const { login, loading } = useLogin();
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, password });
     login({ email, password });
   };
 
@@ -66,7 +65,7 @@ const Login = () => {
                 <div role="status" className="flex justify-center align-items-center gap-2">
                   <svg
                     aria-hidden="true"
-                    class="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    className="inline w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"

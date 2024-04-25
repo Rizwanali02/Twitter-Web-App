@@ -5,6 +5,7 @@ import { FcLike } from "react-icons/fc";
 import useGetAllTweet from "../../hooks/tweetHook/useGetAllTweet";
 import { useSelector } from "react-redux";
 import useLikeOrDislike from "../../hooks/tweetHook/useLikeOrDislike";
+import {Link} from 'react-router-dom';
 
 const Tweet = () => {
   const { user } = useSelector((store) => store.user);
@@ -38,7 +39,7 @@ const Tweet = () => {
                 round={true}
               />
               <div className="flex mb-4 mx-2 gap-1">
-                <p className="font-bold">{tweet.userDetails[0].name}</p>
+                <Link  to={`/profile/${tweet.userDetails[0]._id}`} className="font-bold">{tweet.userDetails[0].name}</Link>
                 <p className="text-gray-600">
                   @{tweet.userDetails[0].username}
                 </p>

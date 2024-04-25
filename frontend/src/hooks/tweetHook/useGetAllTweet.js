@@ -18,7 +18,8 @@ const useGetAllTweet = ({ id }) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            dispatch(getMyTweets(res.data.tweets));
+            const tweets=res.data.tweets.reverse();
+            dispatch(getMyTweets(tweets));
         } catch (error) {
             console.error(error);
 

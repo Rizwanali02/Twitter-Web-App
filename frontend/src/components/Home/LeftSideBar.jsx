@@ -8,6 +8,7 @@ import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/constant";
 import toast from "react-hot-toast";
 import { getUser } from "../../redux/userSlice";
+import Navbar from "./Navbar";
 
 const LeftSideBar = () => {
   const { user } = useSelector((store) => store.user);
@@ -90,32 +91,7 @@ const LeftSideBar = () => {
 
       {/* mobile screen laypit */}
       <div className="sm:hidden flex justify-between">
-        <div>
-          <Link
-            to={`/profile/${user?._id}`}
-            className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full"
-          >
-            <div>
-              <Avatar src="/images/download.jpeg" size="40" round={true} />
-            </div>
-          </Link>
-        </div>
-        <div className="flex items-center justify-center">
-          <Link to={"/"}>
-            <img
-              src="https://www.edigitalagency.com.au/wp-content/uploads/new-Twitter-logo-x-black-png-1200x1227.png"
-              alt="twitter logo"
-              className="w-8 h-auto object-cover object-center  hover:cursor-pointer rounded-full"
-            />
-          </Link>
-        </div>
-        <div>
-          <Link className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full">
-            <div>
-              <FaSignOutAlt size={"30px"} />
-            </div>
-          </Link>
-        </div>
+        <Navbar user={user} />
       </div>
     </>
   );

@@ -22,7 +22,6 @@ const useLogin = () => {
                     },
                     withCredentials: true
                 });
-            console.log(res);
             dispatch(getUser(res?.data?.user))
             dispatch(getToken(res?.data?.token))
             if (res.data.success) {
