@@ -5,6 +5,7 @@ import Avatar from "react-avatar";
 import useProfile from "../../hooks/userHook/useProfile";
 import { useSelector } from "react-redux";
 import { useFollowAndUnfollow } from "../../hooks/userHook/useFollowAndUnfollow";
+import MyTweets from "./MyTweets";
 
 const Profile = () => {
   const { profile, user } = useSelector((store) => store.user);
@@ -90,12 +91,8 @@ const Profile = () => {
         <div className="m-4 text-sm">
           <p>
             🌐 Exploring the web's endless possibilities with MERN Stack 🚀 |
-            Problem solver by day, coder by night 🌙 | Coffee lover ☕ | Join me
-            on this coding journey! Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Eveniet nobis omnis, veniam quis ex, voluptatum
-            officia nesciunt amet voluptatibus odit reiciendis recusandae dolor,
-           
           </p>
+          <MyTweets id={id}/>
         </div>
       </div>
     </div>

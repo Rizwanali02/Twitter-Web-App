@@ -81,8 +81,9 @@ const likeOrDislike = async (req, res) => {
 
 const getMyTweets = async (req, res) => {
     try {
-        const tweetCreateUserId = req.user._id;
-        console.log(tweetCreateUserId);
+        const { id } = req.params;
+        const tweetCreateUserId = id;
+        console.log("id is"+tweetCreateUserId);
         const myTweets = await Tweet.find({ userId: tweetCreateUserId });
         res.status(200).json({
             success: true,

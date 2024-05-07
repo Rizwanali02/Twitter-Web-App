@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import Feed from "./Feed";
 import BookMark from "../pages/BookMark";
 import Register from "../pages/Register";
+import MyTweets from "../pages/MyTweets";
 
 const Routes = () => {
   const appRouter = createBrowserRouter([
@@ -34,6 +35,10 @@ const Routes = () => {
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/mytweets",
+      element: <MyTweets />,
     },
   ]);
 

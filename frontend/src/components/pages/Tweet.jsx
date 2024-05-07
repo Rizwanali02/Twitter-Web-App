@@ -1,7 +1,6 @@
 import React from "react";
 import Avatar from "react-avatar";
 import { CiHeart, CiBookmark } from "react-icons/ci";
-import { FcLike } from "react-icons/fc";
 import useGetAllTweet from "../../hooks/tweetHook/useGetAllTweet";
 import { useSelector } from "react-redux";
 import useLikeOrDislike from "../../hooks/tweetHook/useLikeOrDislike";
@@ -54,11 +53,11 @@ const Tweet = () => {
                 >
                   <CiHeart
                     size={"30px"}
-                    color="gray"
-                    className={`hover:bg-pink-200 rounded-full cursor-pointer ${isLiked && " bg-[#e9cfcf]"}`}
+                    color={isLiked ? "red":"black"}
+                    className={`hover:bg-pink-200 rounded-full cursor-pointer `}
                   />
                 </button>
-                <span>{tweet.like.length}</span>
+                <span>{tweet.like?.length}</span>
               </div>
               <div className="flex items-center">
                 <button className="text-blue-500 flex gap-1 items-center hover:text-blue-700">

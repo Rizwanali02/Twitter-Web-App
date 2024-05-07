@@ -12,7 +12,7 @@ const register = async (req, res) => {
                 success: false
             })
         }
-        const user = await User.findOne({ email });
+        const user = await User.findOne({email});
         if (user) {
             return res.status(401).json({
                 message: "User already exist.",
@@ -158,13 +158,13 @@ const getOtherUsers = async (req, res) => {
 const followAndUnFollow = async (req, res) => {
     try {
         const loggedInUserId = req.user._id; // user follow/unfollow krne wala
-        const userId = req.params.id; // user jise followed/unfollowed krna hai
+        const userId = req.params.id; // user jise follow/unfollow krna hai
 
 
         const loggedInUser = await User.findById(loggedInUserId);
         const user = await User.findById(userId);
 
-        // Check if the user being followed/unfollowed exists
+        // Check if the user being follow/unfollow exists
         if (!user) {
             return res.status(404).json({
                 success: false,
