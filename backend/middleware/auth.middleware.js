@@ -36,7 +36,7 @@ const isAuthenticated = async (req, res, next) => {
         console.error(`Token verification failed: ${error}`);
         return res.status(500).json({
             success: false,
-            message: "Internal Server Error"
+            message: "Internal Server Error -- Token verification failed"
         });
     }
 };

@@ -17,6 +17,10 @@ const tweetShema = new mongoose.Schema({
     userDetails: {
         type: Array,
         default: []
+    },
+    isBookmarks:{
+        type:Array,
+        default:[]
     }
 
 

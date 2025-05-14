@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Tweet } from "../models/tweet.model.js";
 import { User } from "../models/user.model.js";
 
@@ -19,7 +20,7 @@ const createTweet = async (req, res) => {
         const newTweet = await Tweet.create({
             description,
             userId: id,
-            userDetails: user
+            // userDetails: user
         });
 
         return res.status(201).json({
@@ -83,8 +84,11 @@ const getMyTweets = async (req, res) => {
     try {
         const { id } = req.params;
         const tweetCreateUserId = id;
-        console.log("id is"+tweetCreateUserId);
-        const myTweets = await Tweet.find({ userId: tweetCreateUserId });
+        const myTweets = await Tweet.find({ userId: tweetCreateUserId }).sort({ createdAt: -1 }).populate({
+            path: "userId",
+            model: "User",
+            select: "_id name username following bookmarks profilePic followers"
+        });;
         res.status(200).json({
             success: true,
             message: "User All Tweets",
@@ -95,16 +99,19 @@ const getMyTweets = async (req, res) => {
     }
 
 };
-
 const getAllTweets = async (req, res) => {
     try {
         // logged-in user's ID
         const { loggedInUserId } = req.params;
 
         // OtherUsers 
-        const otherUsersId = await User.find({ _id: { $ne: loggedInUserId } });
-
-        const otherUsersTweets = await Tweet.find({ userId: otherUsersId })
+        const otherUsers = await User.find({ _id: { $ne: loggedInUserId } });
+        const otherUsersIds = otherUsers.map(user => user._id);
+        const otherUsersTweets = await Tweet.find({ userId: { $in: otherUsersIds } }).populate({
+            path: "userId",
+            model: "User",
+            select: "_id name username following bookmarks profilePic followers"
+        });
 
         res.status(200).json({
             success: true,
@@ -126,9 +133,17 @@ const getFollowingAllTweets = async (req, res) => {
     try {
         const { id } = req.params;
         const loggedInUser = await User.findById(id);
-        const loggedInUserTweets = await Tweet.find({ userId: id });
+        const loggedInUserTweets = await Tweet.find({ userId: id }).populate({
+            path: "userId",
+            model: "User",
+            select: "_id name username following bookmarks profilePic followers"
+        });;
         const followingUserTweets = await Promise.all(loggedInUser.following?.map((otherUserId) => {
-            return Tweet.find({ userId: otherUserId });
+            return Tweet.find({ userId: otherUserId }).populate({
+                path: "userId",
+                model: "User",
+                select: "_id name username following bookmarks profilePic followers"
+            });
         }));
 
         const allTweets = [...loggedInUserTweets, ...followingUserTweets.flat()]; // Flatten the array of arrays
@@ -148,6 +163,91 @@ const getFollowingAllTweets = async (req, res) => {
 };
 
 
+const toggleBookMark = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const tweetId = req.params.tweetId;
+
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ success: false, message: "User Not Found" });
+
+        const tweet = await Tweet.findById(tweetId);
+        if (!tweet) return res.status(404).json({ success: false, message: "Tweet Not Found" });
+
+        const isBookmarked = user.bookmarks.includes(tweetId);
+
+        let updatedUser;
+        let updatedTweet;
+
+        if (isBookmarked) {
+            updatedUser = await User.findByIdAndUpdate(
+                userId,
+                { $pull: { bookmarks: tweetId } },
+                { new: true }
+            );
+            updatedTweet = await Tweet.findByIdAndUpdate(
+                tweetId, // ✅ fixed this
+                { $pull: { isBookmarks: userId } },
+                { new: true }
+            );
+            return res.status(200).json({
+                success: true,
+                message: "Removed from bookmarks",
+                user: updatedUser,
+                tweet: updatedTweet
+            });
+        } else {
+            updatedUser = await User.findByIdAndUpdate(
+                userId,
+                { $push: { bookmarks: tweetId } },
+                { new: true }
+            );
+            updatedTweet = await Tweet.findByIdAndUpdate(
+                tweetId, // ✅ fixed this
+                { $push: { isBookmarks: userId } },
+                { new: true }
+            );
+            return res.status(200).json({
+                success: true,
+                message: "Added to bookmarks",
+                user: updatedUser,
+                tweet: updatedTweet
+            });
+        }
+
+    } catch (error) {
+        console.error("Bookmark Error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error -- Bookmark"
+        });
+    }
+};
+
+const getBookMarkTweet = async (req, res) => {
+    try {
+        const userId = req.user._id;
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const bookmarkIds = user.bookmarks;
+
+        const bookmarkedTweets = await Tweet.find({ _id: { $in: bookmarkIds } }).populate({
+            path: "userId",
+            model: "User",
+            select: "_id name username profilePic"
+        });;
+
+        res.status(200).json({ success: true, message: "Bookmark tweet fetched", data: bookmarkedTweets });
+    } catch (error) {
+        console.error("Error fetching bookmarked tweets:", error);
+        res.status(500).json({ message: "Internal server error fetching bookmarked tweets" });
+    }
+};
 
 
 
@@ -158,6 +258,7 @@ export {
     likeOrDislike,
     getMyTweets,
     getAllTweets,
-    getFollowingAllTweets
-
+    getFollowingAllTweets,
+    toggleBookMark,
+    getBookMarkTweet
 }

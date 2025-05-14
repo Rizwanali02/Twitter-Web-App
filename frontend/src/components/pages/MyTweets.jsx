@@ -51,14 +51,14 @@ const MyTweets = ({ id }) => {
           >
             <div className="flex items-center">
               <Avatar
-                src={tweet.userDetails[0].profilePic}
+                src={tweet.userId.profilePic}
                 size="50"
                 round={true}
               />
               <div className="flex mb-4 mx-2 gap-1">
-                <p className="font-bold">{tweet.userDetails[0].name}</p>
+                <p className="font-bold">{tweet.userId.name}</p>
                 <p className="text-gray-600">
-                  @{tweet.userDetails[0].username}
+                  @{tweet.userId.username}
                 </p>
               </div>
             </div>
@@ -76,7 +76,7 @@ const MyTweets = ({ id }) => {
               <div className="flex items-center">
                 <button className="text-blue-500 flex gap-1 items-center hover:text-blue-700">
                   <CiBookmark size={"25px"} color="gray" />
-                  <span>2</span>
+                  <span>{tweet.isBookmarks?.length}</span>
                 </button>
               </div>
               {user._id === profile._id && (

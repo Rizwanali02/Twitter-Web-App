@@ -5,6 +5,7 @@ import useGetAllTweet from "../../hooks/tweetHook/useGetAllTweet";
 import { useSelector } from "react-redux";
 import useLikeOrDislike from "../../hooks/tweetHook/useLikeOrDislike";
 import {Link} from 'react-router-dom';
+import useBookmark from "../../hooks/tweetHook/useBookmark";
 
 const Tweet = () => {
   const { user } = useSelector((store) => store.user);
@@ -16,9 +17,13 @@ const Tweet = () => {
   }
 
   const { likeDisLike } = useLikeOrDislike();
+  const { bookmarkTweet } = useBookmark();
 
   const likeAndDislike = async (id) => {
     await likeDisLike({ id });
+  };
+  const handleBookmarkTweet = async (tweetId) => {
+    await bookmarkTweet({ tweetId });
   };
 
   return (
@@ -26,6 +31,7 @@ const Tweet = () => {
       {tweets?.map((tweet) => {
         //find if user is already liked tweet and change like btn background!
         const isLiked = tweet.like.includes(id);
+        const isBookmarked = tweet.isBookmarks?.includes(id);
         return (
           <div
             key={tweet._id}
@@ -33,14 +39,14 @@ const Tweet = () => {
           >
             <div className="flex items-center">
               <Avatar
-                src={tweet.userDetails[0].profilePic}
+                src={tweet.userId?.profilePic}
                 size="50"
                 round={true}
               />
               <div className="flex mb-4 mx-2 gap-1">
-                <Link  to={`/profile/${tweet.userDetails[0]._id}`} className="font-bold">{tweet.userDetails[0].name}</Link>
+                <Link  to={`/profile/${tweet.userId?._id}`} className="font-bold">{tweet.userId?.name}</Link>
                 <p className="text-gray-600">
-                  @{tweet.userDetails[0].username}
+                  @{tweet.userId?.username}
                 </p>
               </div>
             </div>
@@ -56,14 +62,15 @@ const Tweet = () => {
                     color={isLiked ? "red":"black"}
                     className={`hover:bg-pink-200 rounded-full cursor-pointer `}
                   />
-                </button>
                 <span>{tweet.like?.length}</span>
+                </button>
               </div>
               <div className="flex items-center">
-                <button className="text-blue-500 flex gap-1 items-center hover:text-blue-700">
-                  <CiBookmark size={"25px"} color="gray" />
+                <button
+                onClick={()=>handleBookmarkTweet(tweet._id)} className=" flex gap-1 items-center hover:text-blue-500">
+                  <CiBookmark size={"25px"} color={isBookmarked ? "red":""} />
+                <span>{tweet.isBookmarks?.length}</span>
                 </button>
-                <span>2</span>
               </div>
             </div>
           </div>
