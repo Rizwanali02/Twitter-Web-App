@@ -36,7 +36,7 @@ const BookMark = () => {
       {bookmarks?.map((tweet) => {
         const isLiked = tweet.like.includes(user?._id);
         return (
-          <div key={tweet._id} className="w-full border-b border-gray-200 p-4">
+          <div key={tweet._id} className="w-full border-b border-gray-200 px-4 pt-4 pb-6">
             <div className="flex items-start gap-3">
               <Avatar src={tweet.userId.profilePic} size="50" round={true} />
               <div className="flex flex-col w-full">
