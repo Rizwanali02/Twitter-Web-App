@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import userRoute from "./routes/user.routes.js"
 import userTweet from "./routes/tweet.routes.js"
 import cors from 'cors';
+import messageRoute from './routes/message.routes.js';
 
 dotenv.config();
 dbConnection()
@@ -22,6 +23,7 @@ app.use(cookieParser());
 // Routes--------------------------------
 app.use("/api/v3/user", userRoute);
 app.use("/api/v3/tweet", userTweet);
+app.use("/api/v3/message", messageRoute);
 
 app.get('/', (req, res) => {
     res.send('Backend Development');
