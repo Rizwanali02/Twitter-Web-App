@@ -7,6 +7,8 @@ import Feed from "./Feed";
 import BookMark from "../pages/BookMark";
 import Register from "../pages/Register";
 import MyTweets from "../pages/MyTweets";
+import ChatSection from "../chat/ChatSection";
+import ChatUsers from "../chat/ChatUsers";
 
 const Routes = () => {
   const appRouter = createBrowserRouter([
@@ -26,6 +28,14 @@ const Routes = () => {
           path: "/bookmark",
           element: <BookMark />,
         },
+        {
+          path: "/chat",
+          element: <ChatUsers />,
+        },
+        {
+          path: "/chat/:id",
+          element: <ChatSection />,
+        },
       ],
     },
     {
@@ -36,10 +46,10 @@ const Routes = () => {
       path: "/register",
       element: <Register />,
     },
-    {
-      path: "/mytweets",
-      element: <MyTweets />,
-    },
+    // {
+    //   path: "/mytweets",
+    //   element: <MyTweets />,
+    // },
   ]);
 
   return (

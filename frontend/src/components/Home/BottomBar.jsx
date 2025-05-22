@@ -1,7 +1,8 @@
 import React from "react";
+import { BiChat } from "react-icons/bi";
 import { CiHome,  CiBookmark, CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
-
+import { IoChatbubblesOutline } from "react-icons/io5"
 const BottomBar = () => {
   return (
     <>
@@ -18,9 +19,16 @@ const BottomBar = () => {
         </div>
 
         <div>
+          <Link to={"/chat"} className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full">
+            <div>
+              <IoChatbubblesOutline   size={"30px"} />
+            </div>
+          </Link>
+        </div>
+        <div>
           <Link className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full">
             <div>
-              <CiSearch size={"30px"} />
+              <CiSearch   size={"30px"} />
             </div>
           </Link>
         </div>

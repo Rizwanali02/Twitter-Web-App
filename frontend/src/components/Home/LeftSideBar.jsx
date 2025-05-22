@@ -63,6 +63,17 @@ const LeftSideBar = () => {
           </div>
           <div>
             <Link
+              to={"/chat"}
+              className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full"
+            >
+              <div>
+                <CiBookmark size={"24px"} />
+              </div>
+              <h1 className=" text-lg ml-2">Chats</h1>
+            </Link>
+          </div>
+          <div>
+            <Link
               to={"/bookmark"}
               className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full"
             >
