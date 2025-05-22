@@ -3,6 +3,7 @@ import { CiHome, CiUser, CiBookmark, CiSearch } from "react-icons/ci";
 import { Link, useNavigate } from "react-router-dom";
 import Avatar from "react-avatar";
 import { FaSignOutAlt } from "react-icons/fa";
+import { IoChatbubblesOutline } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/constant";
@@ -67,7 +68,7 @@ const LeftSideBar = () => {
               className="flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full"
             >
               <div>
-                <CiBookmark size={"24px"} />
+                <IoChatbubblesOutline size={"24px"} />
               </div>
               <h1 className=" text-lg ml-2">Chats</h1>
             </Link>
